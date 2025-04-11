@@ -3,8 +3,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const fileInput = document.getElementById('file-input');
     const selectFilesBtn = document.getElementById('select-files');
     const previewContainer = document.getElementById('preview-container');
-    const downloadAllContainer = document.getElementById('download-all-container');
+    const controlsContainer = document.getElementById('controls-container');
     const downloadAllBtn = document.getElementById('download-all-btn');
+    const clearAllBtn = document.getElementById('clear-all-btn');
     
     // Store processed images
     const processedImages = [];
@@ -38,6 +39,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Handle download all button
     downloadAllBtn.addEventListener('click', downloadAllImages);
     
+    // Handle clear all button
+    clearAllBtn.addEventListener('click', clearAllImages);
+    
     function preventDefaults(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -61,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const files = Array.from(e.target.files);
         
         if (files.length > 0) {
-            downloadAllContainer.style.display = 'block';
+            controlsContainer.style.display = 'block';
         }
         
         files.forEach(file => {
@@ -94,14 +98,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 const fileSize = Math.round((base64String.length * 3) / 4);
                 
                 // Store the processed image data
-                processedImages.push({
+                const imageData = {
                     name: file.name.replace(/\.[^/.]+$/, '') + '_64x64.jpg',
                     dataUrl: resizedImageDataUrl
-                });
+                };
+                processedImages.push(imageData);
                 
                 // Create preview item
                 const previewItem = document.createElement('div');
                 previewItem.className = 'preview-item';
+                
+                // Create remove button
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'remove-btn';
+                removeBtn.textContent = '×';
+                removeBtn.addEventListener('click', () => {
+                    removeImage(previewItem, imageData);
+                });
+                previewItem.appendChild(removeBtn);
                 
                 // Create preview image
                 const previewImage = document.createElement('img');
@@ -122,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 downloadBtn.className = 'download-btn';
                 downloadBtn.textContent = 'Download';
                 downloadBtn.addEventListener('click', () => {
-                    downloadImage(resizedImageDataUrl, file.name.replace(/\.[^/.]+$/, '') + '_64x64.jpg');
+                    downloadImage(resizedImageDataUrl, imageData.name);
                 });
                 previewItem.appendChild(downloadBtn);
                 
@@ -134,6 +148,35 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         
         reader.readAsDataURL(file);
+    }
+    
+    function removeImage(previewItem, imageData) {
+        // Remove from DOM
+        previewContainer.removeChild(previewItem);
+        
+        // Remove from processed images
+        const index = processedImages.indexOf(imageData);
+        if (index > -1) {
+            processedImages.splice(index, 1);
+        }
+        
+        // Hide controls if no images left
+        if (processedImages.length === 0) {
+            controlsContainer.style.display = 'none';
+        }
+    }
+    
+    function clearAllImages() {
+        // Clear preview container
+        while (previewContainer.firstChild) {
+            previewContainer.removeChild(previewContainer.firstChild);
+        }
+        
+        // Clear processed images array
+        processedImages.length = 0;
+        
+        // Hide controls
+        controlsContainer.style.display = 'none';
     }
     
     function downloadImage(dataUrl, filename) {
