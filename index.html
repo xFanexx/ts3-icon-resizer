@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeamSpeak Icon Resizer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>TeamSpeak Icon Resizer</h1>
+    <div class="container">
+        <div id="drop-area" class="drop-area">
+            <div class="icon">📁</div>
+            <p>Drag & Drop your TeamSpeak icons here</p>
+            <p>or</p>
+            <button class="btn" id="select-files">Select Files</button>
+            <input type="file" id="file-input" class="file-input" accept="image/*" multiple>
+        </div>
+        
+        <div id="preview-container" class="preview-container"></div>
+        
+        <div class="download-all" id="download-all-container" style="display: none;">
+            <button class="btn" id="download-all-btn">Download All Resized Icons</button>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h2>About This Tool</h2>
+        <p>This simple tool allows you to resize TeamSpeak icons to the standard 64x64 pixels size with 100% JPEG quality. All processing happens locally in your browser - no files are uploaded to any server.</p>
+        <ul>
+            <li>Resize multiple images at once</li>
+            <li>Output as high-quality JPEG (100%)</li>
+            <li>Preview before download</li>
+            <li>Download individually or all at once</li>
+        </ul>
+    </div>
+    
+    <div class="footer">
+        <p>Created with ❤️ | <a href="https://github.com/xFanexx/ts3-icon-resizer" target="_blank">GitHub Repository</a></p>
+    </div>
+
+    <script src="jszip.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
