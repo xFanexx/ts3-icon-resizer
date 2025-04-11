@@ -90,8 +90,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Draw image on canvas with proper scaling
                 ctx.drawImage(img, 0, 0, 64, 64);
                 
-                // Convert to JPEG with 80% quality
-                const resizedImageDataUrl = canvas.toDataURL('image/jpeg', 0.8);
+                // Convert to PNG
+                const resizedImageDataUrl = canvas.toDataURL('image/png');
                 
                 // Get file size of the resized image
                 const base64String = resizedImageDataUrl.split(',')[1];
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Store the processed image data
                 const imageData = {
-                    name: file.name.replace(/\.[^/.]+$/, '') + '_64x64.jpg',
+                    name: file.name.replace(/\.[^/.]+$/, '') + '_64x64.png',
                     dataUrl: resizedImageDataUrl
                 };
                 processedImages.push(imageData);
