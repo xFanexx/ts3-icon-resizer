@@ -17,11 +17,12 @@
             <input type="file" id="file-input" class="file-input" accept="image/*" multiple>
         </div>
         
-        <div id="preview-container" class="preview-container"></div>
-        
-        <div class="download-all" id="download-all-container" style="display: none;">
-            <button class="btn" id="download-all-btn">Download All Resized Icons</button>
+        <div class="controls" id="controls-container" style="display: none;">
+            <button class="btn clear-btn" id="clear-all-btn">Clear All</button>
+            <button class="btn" id="download-all-btn">Download All</button>
         </div>
+        
+        <div id="preview-container" class="preview-container"></div>
     </div>
     
     <div class="container">
@@ -31,6 +32,7 @@
             <li>Resize multiple images at once</li>
             <li>Output as high-quality JPEG (100%)</li>
             <li>Preview before download</li>
+            <li>Remove individual images or clear all</li>
             <li>Download individually or all at once</li>
         </ul>
     </div>
