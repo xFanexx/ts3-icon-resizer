@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // For multiple images, create a zip file
+        // For multiple images, create a zip file without compression
         const zip = new JSZip();
         
         processedImages.forEach((image) => {
@@ -211,12 +211,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 uint8Array[i] = binaryData.charCodeAt(i);
             }
             
-            // Add to zip
-            zip.file(image.name, uint8Array);
+            // Add to zip with no compression (store method)
+            zip.file(image.name, uint8Array, { compression: 'STORE' });
         });
         
         // Generate and download zip
-        zip.generateAsync({ type: 'blob' }).then(function(content) {
+        zip.generateAsync({ 
+            type: 'blob',
+            compression: 'STORE' // Ensure the ZIP itself uses no compression
+        }).then(function(content) {
             const link = document.createElement('a');
             link.href = URL.createObjectURL(content);
             link.download = 'teamspeak_icons_64x64.zip';
